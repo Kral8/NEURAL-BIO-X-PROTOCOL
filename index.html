@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NBX | Neural Bio-X Protocol</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+        body {
+            margin: 0;
+            overflow: hidden; /* Скрываем полосы прокрутки */
+            font-family: 'Orbitron', sans-serif; /* Футуристичный шрифт */
+            color: #00ffcc; /* Неоновый бирюзовый */
+            background-color: #050505;
+        }
+
+        .background-parallax {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('nbx.png'); /* Твоя картинка */
+            background-size: cover;
+            background-position: center center;
+            animation: backgroundShift 20s infinite alternate linear; /* Медленное движение фона */
+            filter: brightness(0.7) contrast(1.2); /* Делаем фон темнее и контрастнее */
+            z-index: -1;
+        }
+
+        @keyframes backgroundShift {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7); /* Полупрозрачный черный слой */
+            backdrop-filter: blur(3px); /* Немного размываем фон */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        h1.glitch {
+            font-size: 5vw; /* Адаптивный размер текста */
+            text-transform: uppercase;
+            position: relative;
+            text-shadow: 0.05em 0 0 #00fffc, -0.025em -0.05em 0 #fc00ff, 0.025em 0.05em 0 #fffc00;
+            animation: glitch 1.5s infinite linear alternate;
+            margin-bottom: 20px;
+        }
+
+        @keyframes glitch {
+            0% { text-shadow: 0.05em 0 0 #00fffc, -0.025em -0.05em 0 #fc00ff, 0.025em 0.05em 0 #fffc00; }
+            14% { text-shadow: 0.05em 0 0 #00fffc, -0.025em -0.05em 0 #fc00ff, 0.025em 0.05em 0 #fffc00; }
+            15% { text-shadow: -0.05em -0.025em 0 #00fffc, 0.025em 0.025em 0 #fc00ff, -0.05em -0.05em 0 #fffc00; }
+            49% { text-shadow: -0.05em -0.025em 0 #00fffc, 0.025em 0.025em 0 #fc00ff, -0.05em -0.05em 0 #fffc00; }
+            50% { text-shadow: 0.025em 0.05em 0 #00fffc, 0.05em 0 0 #fc00ff, 0 -0.05em 0 #fffc00; }
+            99% { text-shadow: 0.025em 0.05em 0 #00fffc, 0.05em 0 0 #fc00ff, 0 -0.05em 0 #fffc00; }
+            100% { text-shadow: -0.025em 0 0 #00fffc, -0.025em -0.025em 0 #fc00ff, -0.025em -0.05em 0 #fffc00; }
+        }
+
+        p {
+            font-size: 1.2vw;
+            margin-top: 0;
+            color: #00ccff; /* Неоново-голубой */
+            text-shadow: 0 0 8px #00ccff;
+        }
+
+        .status-line {
+            font-size: 1.5vw;
+            margin: 10px 0;
+            animation: typing 4s steps(40, end) infinite, blink-caret .75s step-end infinite;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: .15em solid orange; /* Мигающий курсор */
+        }
+        @keyframes typing { from { width: 0 } to { width: 100% } }
+        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: orange } }
+
+
+        .button-container {
+            margin-top: 40px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 1.5vw;
+            font-weight: bold;
+            text-decoration: none;
+            color: #00ffcc;
+            background: transparent;
+            border: 2px solid #00ffcc;
+            box-shadow: 0 0 15px #00ffcc;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease-in-out;
+            text-shadow: 0 0 5px #00ffcc;
+        }
+
+        .btn:before { /* Эффект свечения кнопки */
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0,255,204,0.3), transparent);
+            transition: all 0.6s ease-in-out;
+        }
+
+        .btn:hover {
+            color: #050505;
+            background: #00ffcc;
+            box-shadow: 0 0 30px #00ffcc, 0 0 60px #00ffcc;
+        }
+
+        .btn:hover:before {
+            left: 100%;
+        }
+
+        .terminal-code {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            font-size: 0.8vw;
+            color: rgba(0, 255, 0, 0.4);
+            text-align: left;
+            width: 98%;
+            white-space: pre-wrap;
+            pointer-events: none; /* Чтобы не мешало кликать по кнопкам */
+        }
+    </style>
+</head>
+<body>
+    <div class="background-parallax"></div>
+    <div class="overlay">
+        <h1 class="glitch">NBX PROTOCOL</h1>
+        <p class="status-line">> SYSTEM STATUS: EVOLUTIONARY OVERRIDE INITIATED...</p>
+        <p>> VALIDITY: BYPASSED & VERIFIED.</p>
+        <div class="button-container">
+            <a href="https://pump.fun/YOUR_PUMP_FUN_LINK_HERE" class="btn">BUY $NBX</a>
+            <a href="https://t.me/+HfSNe36pxZ85Nzky" class="btn">TELEGRAM PORTAL</a>
+        </div>
+        <pre class="terminal-code">
+> Initializing Neural Bio-X Protocol v1.0.26...
+> Secure connection established.
+> Data streams online.
+> Network integrity: 100%.
+> Future unlocked.
+        </pre>
+    </div>
+</body>
+</html>
