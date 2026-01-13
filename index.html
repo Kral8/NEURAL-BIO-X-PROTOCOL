@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NBX | Neural Bio-X Protocol</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
         body {
             margin: 0;
-            overflow: hidden; /* Скрываем полосы прокрутки */
-            font-family: 'Orbitron', sans-serif; /* Футуристичный шрифт */
-            color: #00ffcc; /* Неоновый бирюзовый */
+            overflow: hidden;
+            font-family: 'Orbitron', sans-serif;
+            color: #00ffcc; /* Neon Cyan */
             background-color: #050505;
         }
 
@@ -20,11 +20,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('nbx.png'); /* Твоя картинка */
+            background-image: url('nbx.png'); /* Your main image */
             background-size: cover;
             background-position: center center;
-            animation: backgroundShift 20s infinite alternate linear; /* Медленное движение фона */
-            filter: brightness(0.7) contrast(1.2); /* Делаем фон темнее и контрастнее */
+            animation: backgroundShift 20s infinite alternate linear;
+            filter: brightness(0.7) contrast(1.2);
             z-index: -1;
         }
 
@@ -39,17 +39,19 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7); /* Полупрозрачный черный слой */
-            backdrop-filter: blur(3px); /* Немного размываем фон */
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(3px);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
+            padding: 20px; /* Добавил отступы */
+            box-sizing: border-box; /* Чтобы padding не выходил за границы */
         }
 
         h1.glitch {
-            font-size: 5vw; /* Адаптивный размер текста */
+            font-size: clamp(30px, 5vw, 80px); /* Адаптивный размер текста */
             text-transform: uppercase;
             position: relative;
             text-shadow: 0.05em 0 0 #00fffc, -0.025em -0.05em 0 #fc00ff, 0.025em 0.05em 0 #fffc00;
@@ -68,34 +70,36 @@
         }
 
         p {
-            font-size: 1.2vw;
+            font-size: clamp(12px, 1.2vw, 20px);
             margin-top: 0;
-            color: #00ccff; /* Неоново-голубой */
+            color: #00ccff; /* Neon Blue */
             text-shadow: 0 0 8px #00ccff;
+            line-height: 1.5;
         }
 
         .status-line {
-            font-size: 1.5vw;
+            font-size: clamp(14px, 1.5vw, 24px);
             margin: 10px 0;
-            animation: typing 4s steps(40, end) infinite, blink-caret .75s step-end infinite;
+            animation: typing 4s steps(40, end) infinite alternate, blink-caret .75s step-end infinite;
             white-space: nowrap;
             overflow: hidden;
-            border-right: .15em solid orange; /* Мигающий курсор */
+            border-right: .15em solid #ffcc00; /* Blinking cursor */
         }
         @keyframes typing { from { width: 0 } to { width: 100% } }
-        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: orange } }
-
+        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: #ffcc00 } }
 
         .button-container {
             margin-top: 40px;
             display: flex;
+            flex-wrap: wrap; /* Для адаптивности на мобильных */
             gap: 20px;
+            justify-content: center;
         }
 
         .btn {
             display: inline-block;
             padding: 15px 30px;
-            font-size: 1.5vw;
+            font-size: clamp(14px, 1.5vw, 22px);
             font-weight: bold;
             text-decoration: none;
             color: #00ffcc;
@@ -106,9 +110,11 @@
             overflow: hidden;
             transition: all 0.4s ease-in-out;
             text-shadow: 0 0 5px #00ffcc;
+            min-width: 180px; /* Минимальная ширина кнопок */
+            text-align: center;
         }
 
-        .btn:before { /* Эффект свечения кнопки */
+        .btn:before {
             content: '';
             position: absolute;
             top: 0;
@@ -129,16 +135,33 @@
             left: 100%;
         }
 
-        .terminal-code {
+        .github-credit {
             position: absolute;
-            bottom: 10px;
-            left: 10px;
-            font-size: 0.8vw;
-            color: rgba(0, 255, 0, 0.4);
-            text-align: left;
-            width: 98%;
-            white-space: pre-wrap;
-            pointer-events: none; /* Чтобы не мешало кликать по кнопкам */
+            bottom: 20px;
+            font-size: clamp(10px, 1vw, 16px);
+            color: #ffffff;
+            opacity: 0.7;
+            display: flex;
+            align-items: center;
+            gap: 8px; /* Отступ между иконкой и текстом */
+        }
+
+        .github-logo {
+            width: clamp(16px, 1.5vw, 24px); /* Адаптивный размер иконки */
+            height: auto;
+            filter: invert(1) brightness(1.5) hue-rotate(180deg); /* Чтобы иконка стала неоново-бирюзовой */
+        }
+
+        /* Адаптивность для маленьких экранов */
+        @media (max-width: 768px) {
+            .overlay { padding: 10px; }
+            h1.glitch { font-size: 8vw; margin-bottom: 10px; }
+            p { font-size: 2.5vw; }
+            .status-line { font-size: 3vw; }
+            .button-container { flex-direction: column; gap: 15px; margin-top: 20px; }
+            .btn { font-size: 4vw; padding: 12px 20px; min-width: unset; width: 80%; }
+            .github-credit { font-size: 2.5vw; bottom: 10px; }
+            .github-logo { width: 4vw; }
         }
     </style>
 </head>
@@ -152,13 +175,10 @@
             <a href="https://pump.fun/YOUR_PUMP_FUN_LINK_HERE" class="btn">BUY $NBX</a>
             <a href="https://t.me/+HfSNe36pxZ85Nzky" class="btn">TELEGRAM PORTAL</a>
         </div>
-        <pre class="terminal-code">
-> Initializing Neural Bio-X Protocol v1.0.26...
-> Secure connection established.
-> Data streams online.
-> Network integrity: 100%.
-> Future unlocked.
-        </pre>
+        <div class="github-credit">
+            <img src="https://raw.githubusercontent.com/Kral8/NEURAL-BIO-X-PROTOCOL/main/github_logo.png" alt="GitHub" class="github-logo">
+            <span>CO-DEVELOPED BY GITHUB OPEN-SOURCE COMMUNITY</span>
+        </div>
     </div>
 </body>
 </html>
