@@ -3,241 +3,234 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PANIC DOG | $PNDG</title>
+    <title>PANIC DOG | $PNDG SPACE</title>
     <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Fredoka+One&display=swap" rel="stylesheet">
     <style>
         :root {
             --neon-green: #00ff88;
             --neon-yellow: #ffeb3b;
             --panic-red: #ff3366;
-            --bg-dark: #1a1a2e;
+            --bg-dark: #050510;
         }
 
+        /* Разрешаем скролл */
         body, html {
             margin: 0;
             padding: 0;
             width: 100%;
-            height: 100%;
-            overflow: hidden;
+            min-height: 100vh;
+            overflow-x: hidden;
             background-color: var(--bg-dark);
             font-family: 'Fredoka One', cursive;
             color: white;
+            scroll-behavior: smooth;
         }
 
-        /* Анимированный фон с яркими свечами-конфетами */
-        #chart-canvas {
+        /* Космический фон со звездами */
+        .space-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 1;
-            opacity: 0.6;
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+            z-index: -2;
         }
 
-        .overlay {
-            position: relative;
-            z-index: 10;
-            height: 100vh;
+        /* Луна */
+        .moon {
+            position: fixed;
+            top: 10%;
+            right: 10%;
+            width: 100px;
+            height: 100px;
+            background: #fdfae5;
+            border-radius: 50%;
+            box-shadow: 0 0 40px #fdfae5, inset 10px 0 20px rgba(0,0,0,0.2);
+            z-index: -1;
+        }
+
+        /* Звезды на холсте */
+        #chart-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        /* Кастомный курсор - Собака на ракете */
+        #rocket-cursor {
+            position: fixed;
+            width: 50px;
+            height: 50px;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease-out;
+            display: none; /* Прячем на мобилках */
+        }
+
+        @media (min-width: 1024px) {
+            #rocket-cursor { display: block; }
+            body { cursor: none; } /* Скрываем стандартную мышь */
+            a, button { cursor: none; }
+        }
+
+        .content-section {
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: radial-gradient(circle, transparent 20%, rgba(26, 26, 46, 0.8) 90%);
-            text-align: center;
-            padding: 20px;
+            position: relative;
+            z-index: 10;
+            padding: 40px 20px;
+            box-sizing: border-box;
         }
 
-        /* Тот самый пес-стикер */
         .dog-container {
-            width: clamp(200px, 40vw, 350px);
-            height: auto;
-            margin-bottom: 10px;
+            width: clamp(250px, 60vw, 450px);
             filter: drop-shadow(0 0 30px var(--neon-yellow));
-            animation: happy-bounce 0.6s infinite alternate cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: space-float 3s infinite ease-in-out;
         }
 
-        @keyframes happy-bounce {
-            0% { transform: scale(1) rotate(-3deg) translateY(0); }
-            100% { transform: scale(1.1) rotate(3deg) translateY(-20px); }
+        @keyframes space-float {
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50% { transform: translateY(-30px) rotate(3deg); }
         }
 
         h1 {
             font-family: 'Bungee', cursive;
-            font-size: clamp(45px, 10vw, 120px);
-            margin: 0;
+            font-size: clamp(40px, 12vw, 100px);
+            margin: 10px 0;
             color: var(--neon-yellow);
-            text-shadow: 8px 8px 0px var(--panic-red);
-            -webkit-text-stroke: 3px black;
-            letter-spacing: 2px;
-        }
-
-        .status-box {
-            background: #fff;
-            color: #000;
-            padding: 10px 30px;
-            border-radius: 50px;
-            border: 4px solid black;
-            box-shadow: 6px 6px 0px var(--neon-green);
-            margin: 25px 0;
-            font-size: 24px;
-            transform: rotate(-1deg);
+            text-shadow: 6px 6px 0px var(--panic-red);
+            -webkit-text-stroke: 2px black;
         }
 
         .buttons {
             display: flex;
-            gap: 25px;
-            margin-top: 20px;
+            gap: 20px;
             flex-wrap: wrap;
             justify-content: center;
+            width: 100%;
         }
 
-        /* Кнопки-наклейки */
         .btn {
-            padding: 20px 45px;
+            padding: 15px 35px;
             font-family: 'Bungee', cursive;
-            font-size: 24px;
+            font-size: clamp(18px, 5vw, 24px);
             text-decoration: none;
             color: black !important;
-            border: 5px solid black;
-            border-radius: 60px;
-            transition: 0.2s ease;
-            cursor: pointer;
-            box-shadow: 10px 10px 0px black;
-            position: relative;
+            border: 4px solid black;
+            border-radius: 50px;
+            box-shadow: 6px 6px 0px black;
+            transition: 0.2s;
+            background: var(--neon-green);
         }
 
-        .btn-buy { background: var(--neon-green); }
-        .btn-tg { background: var(--neon-yellow); }
+        .btn:hover { transform: scale(1.05); background: white; }
 
-        .btn:hover {
-            transform: translate(-5px, -5px);
-            box-shadow: 15px 15px 0px black;
+        /* Адаптация под телефон */
+        @media (max-width: 600px) {
+            .dog-container { width: 85vw; }
+            .moon { width: 60px; height: 60px; top: 5%; right: 5%; }
+            .btn { width: 80%; text-align: center; }
         }
 
-        .btn:active {
-            transform: translate(2px, 2px);
-            box-shadow: 4px 4px 0px black;
-        }
-
-        /* Бегущая строка */
-        .price-ticker {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
+        .footer-ticker {
             background: var(--panic-red);
-            border-top: 5px solid black;
             padding: 15px;
-            font-size: 20px;
-            color: white;
-            white-space: nowrap;
+            border-top: 4px solid black;
             overflow: hidden;
-            z-index: 100;
-        }
-
-        .ticker-wrap {
-            display: inline-block;
-            animation: ticker 15s linear infinite;
-        }
-
-        @keyframes ticker {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
+            width: 100%;
         }
     </style>
 </head>
 <body>
 
+    <div class="space-bg"></div>
+    <div class="moon"></div>
     <canvas id="chart-canvas"></canvas>
+    
+    <div id="rocket-cursor">🚀🐶</div>
 
-    <div class="overlay">
+    <section class="content-section">
         <div class="dog-container">
-            <img src="https://i.ibb.co/Vp8p3Zp/dogi.jpg" alt="Panic Dog" style="width: 100%; border-radius: 20px;">
+            <img src="https://i.ibb.co/Vp8p3Zp/dogi.jpg" alt="Panic Dog" style="width: 100%; border-radius: 30px; border: 5px solid white;">
         </div>
-        
         <h1>PANIC DOG</h1>
-        
-        <div class="status-box">
-            <span id="trend">MUCH GREEN! WOW! 🚀</span>
-        </div>
-
         <div class="buttons">
-            <a href="https://pump.fun/coin/7hq7pNEj1HWgCF4LnJTRufBXMCbZ6zP2JcULC41hpump" class="btn btn-buy">BUY $PNDG</a>
-            <a href="https://t.me/+HfSNe36pxZ85Nzky" class="btn btn-tg">TELEGRAM</a>
+            <a href="https://pump.fun/coin/7hq7pNEj1HWgCF4LnJTRufBXMCbZ6zP2JcULC41hpump" class="btn">BUY $PNDG</a>
+            <a href="https://t.me/+HfSNe36pxZ85Nzky" class="btn" style="background: var(--neon-yellow);">TELEGRAM</a>
+        </div>
+    </section>
+
+    <section class="content-section" style="background: rgba(0,0,0,0.4);">
+        <h2 style="font-size: clamp(30px, 8vw, 60px); color: var(--neon-green);">SPACE MISSION</h2>
+        <p style="max-width: 700px; font-size: 22px; line-height: 1.6; padding: 0 20px;">
+            The panic is real, but the rewards are cosmic! Join the first dog ever to panic his way to the Moon. 
+            No paper hands allowed in the cockpit!
+        </p>
+        <div class="dog-container" style="width: 150px; animation-duration: 2s;">
+            <img src="https://i.ibb.co/Vp8p3Zp/dogi.jpg" style="width: 100%; border-radius: 50%;">
+        </div>
+    </section>
+
+    <div class="footer-ticker">
+        <div style="white-space: nowrap; display: inline-block; animation: scroll 10s linear infinite; font-size: 20px;">
+             $PNDG TO THE MOON 🚀 | PANIC IS THE ONLY STRATEGY 🐾 | BARK AT THE STARS ✨ | NO BONES JUST GAINS 🦴 | 
         </div>
     </div>
 
-    <div class="price-ticker">
-        <div class="ticker-wrap">
-             NO PANIC NO GAIN! 🐾 | $PNDG TO THE MOON! 🚀 | BARK BARK BARK! 🐕 | GREEN CANDLES ONLY! 🕯️ | 
-        </div>
-    </div>
+    <style>
+        @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+    </style>
 
     <script>
         const canvas = document.getElementById('chart-canvas');
         const ctx = canvas.getContext('2d');
-        const trendEl = document.getElementById('trend');
+        const cursor = document.getElementById('rocket-cursor');
 
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        let candles = [];
+        // Слежение мыши за ракетой
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
 
-        class Candle {
-            constructor(x) {
-                this.x = x;
+        // Свечи и звезды
+        let elements = [];
+        class Star {
+            constructor() {
+                this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.w = 20; // Свечи потолще
-                this.h = Math.random() * 120 + 30;
-                this.isGreen = Math.random() > 0.4;
-                this.speed = Math.random() * 3 + 1;
+                this.size = Math.random() * 2;
+                this.speed = Math.random() * 0.5 + 0.1;
             }
-
             draw() {
-                // Рисуем свечи с обводкой
-                ctx.strokeStyle = "black";
-                ctx.lineWidth = 3;
-                ctx.fillStyle = this.isGreen ? "#00ff88" : "#ff3366";
-                
-                // Тело
-                ctx.fillRect(this.x, this.y, this.w, this.h);
-                ctx.strokeRect(this.x, this.y, this.w, this.h);
-                
-                // Фитиль
+                ctx.fillStyle = "white";
                 ctx.beginPath();
-                ctx.moveTo(this.x + this.w/2, this.y - 15);
-                ctx.lineTo(this.x + this.w/2, this.y + this.h + 15);
-                ctx.stroke();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
             }
-
             update() {
-                this.x -= this.speed;
-                if (this.x < -30) {
-                    this.x = canvas.width + 30;
-                    this.y = Math.random() * canvas.height;
-                }
+                this.y += this.speed;
+                if (this.y > canvas.height) this.y = 0;
             }
         }
 
-        for(let i=0; i < 30; i++) {
-            candles.push(new Candle(Math.random() * canvas.width));
-        }
+        for(let i=0; i<100; i++) elements.push(new Star());
 
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            candles.forEach(c => {
-                c.update();
-                c.draw();
-            });
+            elements.forEach(s => { s.update(); s.draw(); });
             requestAnimationFrame(animate);
         }
-
         animate();
-
-        const moods = ["MUCH GREEN! WOW!", "CANDLES GO UP!", "SO PANIC!", "VERY MOON!", "SUCH PROFIT!"];
-        setInterval(() => {
-            trendEl.innerText = moods[Math.floor(Math.random() * moods.length)];
-        }, 1500);
 
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
