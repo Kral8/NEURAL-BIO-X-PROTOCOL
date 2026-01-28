@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PANIC DOG | $PANIC OFFICIAL</title>
+    <title>PANIC BUY DOG | $PANIC OFFICIAL</title>
     <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Fredoka+One&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -55,27 +55,29 @@
             padding: 60px 20px;
         }
 
+        /* Логотип по центру */
         .dog-sticker {
-            width: 250px; /* Уменьшил размер круга */
-            height: 250px;
+            width: 220px;
+            height: 220px;
             object-fit: cover;
             border-radius: 50%;
             border: 4px solid var(--neon-cyan);
             box-shadow: 0 0 30px var(--neon-cyan);
             animation: pulse 2s infinite ease-in-out;
             margin-bottom: 20px;
+            background: #fff;
         }
 
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.03); }
+            50% { transform: scale(1.05); }
         }
 
         h1 {
             font-family: 'Bungee', cursive;
-            font-size: clamp(40px, 8vw, 80px);
+            font-size: clamp(35px, 8vw, 70px);
             text-shadow: 0 0 15px var(--neon-cyan);
-            margin-bottom: 10px;
+            margin: 0;
         }
 
         .nft-alert {
@@ -96,6 +98,26 @@
             75% { transform: rotate(-1deg); }
         }
 
+        /* Галерея NFT */
+        .nft-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            max-width: 500px;
+            margin: 30px 0;
+        }
+
+        .nft-item {
+            border: 2px solid var(--neon-cyan);
+            border-radius: 15px;
+            overflow: hidden;
+            background: rgba(255,255,255,0.05);
+            transition: 0.3s;
+        }
+
+        .nft-item:hover { transform: scale(1.05); box-shadow: 0 0 20px var(--neon-cyan); }
+        .nft-item img { width: 100%; display: block; }
+
         .manifesto {
             max-width: 700px;
             background: rgba(255, 255, 255, 0.03);
@@ -106,8 +128,8 @@
             margin-top: 20px;
         }
 
-        .manifesto h2 { color: var(--neon-green); font-family: 'Bungee', cursive; font-size: 28px; }
-        .manifesto p { font-size: 20px; line-height: 1.5; color: #d0d0d0; }
+        .manifesto h2 { color: var(--neon-green); font-family: 'Bungee', cursive; font-size: 28px; margin-top: 0; }
+        .manifesto p { font-size: 19px; line-height: 1.5; color: #d0d0d0; }
 
         .btn-buy {
             display: inline-block;
@@ -122,9 +144,19 @@
             transition: 0.3s;
         }
 
-        .btn-buy:hover { transform: scale(1.1); box-shadow: 0 0 30px var(--neon-cyan); }
+        .btn-buy:hover { transform: scale(1.1); box-shadow: 0 0 40px var(--neon-cyan); }
 
-        .tg-info { margin-top: 15px; font-size: 16px; color: var(--neon-cyan); }
+        .tg-link {
+            margin-top: 20px;
+            font-size: 18px;
+            color: var(--neon-cyan);
+        }
+
+        .tg-link a { color: white; text-decoration: underline; }
+
+        @media (max-width: 600px) {
+            .nft-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -133,12 +165,19 @@
     <div id="moon-cursor"></div>
 
     <div class="main-content">
-        <img src="panic-dog.png" class="dog-sticker" alt="PNDG Hero">
+        <img src="panic-dog1.png" class="dog-sticker" alt="PANIC DOG">
         
-        <h1>PANIC DOG</h1>
+        <h1>PANIC BUY DOG</h1>
 
         <div class="nft-alert">
             🔥 FIRST 10 BUYERS GET EXCLUSIVE NFTs! 🔥
+        </div>
+
+        <div class="nft-grid">
+            <div class="nft-item"><img src="panic-dog1.png" alt="NFT 1"></div>
+            <div class="nft-item"><img src="panic-dog2.png" alt="NFT 2"></div>
+            <div class="nft-item"><img src="panic-dog3.png" alt="NFT 3"></div>
+            <div class="nft-item"><img src="panic-dog4.png" alt="NFT 4"></div>
         </div>
         
         <div class="manifesto">
@@ -146,17 +185,18 @@
             <p>
                 In a world of scams and rugs, we stand for <strong>absolute transparency</strong>. We are here for the long run. 
                 Every holder is a part of the $PANIC family, and your trust is our most valuable asset. 
-                We don't leave anyone behind. From the depths of panic to the heights of the stars.
+                We don't leave anyone behind.
             </p>
-            <p style="font-style: italic; font-size: 18px; margin-top: 15px;">
-                "Your belief fuels our engines. We are in this together, until the very end."
+            <p style="font-style: italic; font-size: 17px; margin-top: 15px; color: var(--neon-cyan);">
+                "We appreciate every single buyer. We stay until the end."
             </p>
         </div>
 
-        <a href="https://pump.fun/..." class="btn-buy">BUY $PANIC NOW</a>
+        <a href="https://pump.fun/ВАША_ССЫЛКА_ТУТ" class="btn-buy">BUY $PANIC NOW</a>
 
-        <div class="tg-info">
-            First 10 buyers: Send your ETH wallets to our <a href="https://t.me/..." style="color: white;">Telegram</a> to claim NFT!
+        <div class="tg-link">
+            First 10 buyers: DM your transaction & ETH wallet to <br>
+            <a href="https://t.me/Neural_Bio_X">@Neural_Bio_X</a> to claim your NFT!
         </div>
     </div>
 
@@ -169,7 +209,7 @@
         canvas.height = window.innerHeight;
 
         let particles = [];
-        const mouse = { x: null, y: null, radius: 120 };
+        const mouse = { x: null, y: null };
 
         window.addEventListener('mousemove', (e) => {
             mouse.x = e.x;
@@ -192,14 +232,14 @@
                 if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
             }
             draw() {
-                ctx.fillStyle = 'rgba(0, 242, 255, 0.5)';
+                ctx.fillStyle = 'rgba(0, 242, 255, 0.4)';
                 ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
             }
         }
 
         function init() {
             particles = [];
-            for (let i = 0; i < 100; i++) particles.push(new Particle());
+            for (let i = 0; i < 90; i++) particles.push(new Particle());
         }
 
         function connect() {
