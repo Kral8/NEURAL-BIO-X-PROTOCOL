@@ -3,79 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PANIC DOG | $PNDG SPACE</title>
+    <title>PANIC DOG | COSMIC VOYAGE</title>
     <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Fredoka+One&display=swap" rel="stylesheet">
     <style>
         :root {
             --neon-green: #00ff88;
             --neon-yellow: #ffeb3b;
             --panic-red: #ff3366;
-            --bg-dark: #050510;
+            --space-blue: #0a0a2a;
         }
 
-        /* Разрешаем скролл */
         body, html {
             margin: 0;
             padding: 0;
             width: 100%;
             min-height: 100vh;
-            overflow-x: hidden;
-            background-color: var(--bg-dark);
+            background-color: #050510;
             font-family: 'Fredoka One', cursive;
             color: white;
+            overflow-x: hidden;
             scroll-behavior: smooth;
         }
 
-        /* Космический фон со звездами */
-        .space-bg {
+        /* Глубокий космос */
+        .universe {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
-            z-index: -2;
+            background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
+            z-index: -10;
         }
 
         /* Луна */
-        .moon {
+        .moon-giant {
             position: fixed;
-            top: 10%;
-            right: 10%;
-            width: 100px;
-            height: 100px;
-            background: #fdfae5;
+            top: -50px;
+            right: -50px;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, #fdfae5 0%, #e1d9b1 100%);
             border-radius: 50%;
-            box-shadow: 0 0 40px #fdfae5, inset 10px 0 20px rgba(0,0,0,0.2);
-            z-index: -1;
+            box-shadow: 0 0 100px rgba(253, 250, 229, 0.3);
+            z-index: -5;
+            opacity: 0.8;
         }
 
-        /* Звезды на холсте */
-        #chart-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 0;
-            opacity: 0.7;
-            pointer-events: none;
-        }
+        /* Планеты декорации */
+        .planet { position: fixed; border-radius: 50%; z-index: -4; pointer-events: none; }
+        .mars { width: 80px; height: 80px; background: #ff4d4d; top: 20%; left: 10%; box-shadow: inset -10px -10px 20px rgba(0,0,0,0.5); opacity: 0.6; }
+        .saturn { width: 120px; height: 120px; background: #f4d03f; bottom: 15%; right: 15%; opacity: 0.5; }
+        .saturn::after { content: ''; position: absolute; width: 180px; height: 20px; border: 4px solid rgba(255,255,255,0.2); border-radius: 50%; top: 50%; left: -30px; transform: rotate(-25deg); }
 
-        /* Кастомный курсор - Собака на ракете */
+        /* Кастомный курсор: Собака на ракете */
         #rocket-cursor {
             position: fixed;
-            width: 50px;
-            height: 50px;
+            width: 80px;
+            height: 80px;
             pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.1s ease-out;
-            display: none; /* Прячем на мобилках */
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            filter: drop-shadow(0 0 15px var(--neon-green));
+            transition: transform 0.1s linear;
         }
 
-        @media (min-width: 1024px) {
-            #rocket-cursor { display: block; }
-            body { cursor: none; } /* Скрываем стандартную мышь */
-            a, button { cursor: none; }
-        }
+        @media (max-width: 1024px) { #rocket-cursor { display: none; } }
 
         .content-section {
             min-height: 100vh;
@@ -83,159 +79,170 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            position: relative;
-            z-index: 10;
+            text-align: center;
             padding: 40px 20px;
-            box-sizing: border-box;
+            position: relative;
         }
 
-        .dog-container {
-            width: clamp(250px, 60vw, 450px);
-            filter: drop-shadow(0 0 30px var(--neon-yellow));
-            animation: space-float 3s infinite ease-in-out;
+        .hero-img {
+            width: clamp(280px, 50vw, 500px);
+            border-radius: 30px;
+            border: 8px solid white;
+            box-shadow: 0 0 50px var(--neon-yellow);
+            animation: ship-float 4s infinite ease-in-out;
+            background: #fff;
         }
 
-        @keyframes space-float {
-            0%, 100% { transform: translateY(0) rotate(-2deg); }
-            50% { transform: translateY(-30px) rotate(3deg); }
+        @keyframes ship-float {
+            0%, 100% { transform: translateY(0) rotate(-1deg); }
+            50% { transform: translateY(-25px) rotate(2deg); }
         }
 
         h1 {
             font-family: 'Bungee', cursive;
-            font-size: clamp(40px, 12vw, 100px);
-            margin: 10px 0;
+            font-size: clamp(50px, 12vw, 110px);
+            margin: 20px 0;
             color: var(--neon-yellow);
-            text-shadow: 6px 6px 0px var(--panic-red);
-            -webkit-text-stroke: 2px black;
+            text-shadow: 8px 8px 0px var(--panic-red);
+            -webkit-text-stroke: 3px black;
         }
 
-        .buttons {
+        .btn-container {
             display: flex;
             gap: 20px;
             flex-wrap: wrap;
             justify-content: center;
-            width: 100%;
+            margin-top: 30px;
         }
 
         .btn {
-            padding: 15px 35px;
+            padding: 20px 45px;
             font-family: 'Bungee', cursive;
-            font-size: clamp(18px, 5vw, 24px);
+            font-size: 26px;
             text-decoration: none;
-            color: black !important;
-            border: 4px solid black;
-            border-radius: 50px;
-            box-shadow: 6px 6px 0px black;
-            transition: 0.2s;
+            color: black;
             background: var(--neon-green);
+            border: 5px solid black;
+            border-radius: 60px;
+            box-shadow: 10px 10px 0px black;
+            transition: 0.2s;
         }
 
-        .btn:hover { transform: scale(1.05); background: white; }
+        .btn:hover { transform: translate(-5px, -5px); box-shadow: 15px 15px 0px black; background: white; }
 
-        /* Адаптация под телефон */
-        @media (max-width: 600px) {
-            .dog-container { width: 85vw; }
-            .moon { width: 60px; height: 60px; top: 5%; right: 5%; }
-            .btn { width: 80%; text-align: center; }
+        #star-field {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            pointer-events: none;
         }
 
-        .footer-ticker {
+        .ticker {
             background: var(--panic-red);
             padding: 15px;
-            border-top: 4px solid black;
+            border-top: 5px solid black;
+            font-size: 22px;
+            white-space: nowrap;
             overflow: hidden;
-            width: 100%;
+            position: relative;
         }
+
+        .ticker-move { display: inline-block; animation: ticker-kf 20s linear infinite; }
+        @keyframes ticker-kf { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
     </style>
 </head>
-<body>
+<body style="cursor: none;">
 
-    <div class="space-bg"></div>
-    <div class="moon"></div>
-    <canvas id="chart-canvas"></canvas>
-    
+    <div class="universe"></div>
+    <div class="moon-giant"></div>
+    <div class="planet mars"></div>
+    <div class="planet saturn"></div>
+    <canvas id="star-field"></canvas>
+
     <div id="rocket-cursor">🚀🐶</div>
 
     <section class="content-section">
-        <div class="dog-container">
-            <img src="https://i.ibb.co/Vp8p3Zp/dogi.jpg" alt="Panic Dog" style="width: 100%; border-radius: 30px; border: 5px solid white;">
-        </div>
+        <img src="panic-dog.png" class="hero-img" alt="Panic Dog on Rocket">
         <h1>PANIC DOG</h1>
-        <div class="buttons">
-            <a href="https://pump.fun/coin/7hq7pNEj1HWgCF4LnJTRufBXMCbZ6zP2JcULC41hpump" class="btn">BUY $PNDG</a>
-            <a href="https://t.me/+HfSNe36pxZ85Nzky" class="btn" style="background: var(--neon-yellow);">TELEGRAM</a>
+        <div class="btn-container">
+            <a href="https://pump.fun/..." class="btn">BUY $PNDG</a>
+            <a href="https://t.me/..." class="btn" style="background: var(--neon-yellow);">PORTAL</a>
         </div>
     </section>
 
-    <section class="content-section" style="background: rgba(0,0,0,0.4);">
-        <h2 style="font-size: clamp(30px, 8vw, 60px); color: var(--neon-green);">SPACE MISSION</h2>
-        <p style="max-width: 700px; font-size: 22px; line-height: 1.6; padding: 0 20px;">
-            The panic is real, but the rewards are cosmic! Join the first dog ever to panic his way to the Moon. 
-            No paper hands allowed in the cockpit!
+    <section class="content-section" style="background: rgba(0,0,0,0.6); backdrop-filter: blur(5px);">
+        <h2 style="font-size: 60px; color: var(--neon-green); -webkit-text-stroke: 2px black;">ROADMAP TO MARS</h2>
+        <p style="font-size: 26px; max-width: 800px; line-height: 1.4;">
+            Phase 1: Total Panic in Space. <br>
+            Phase 2: Establish base on Saturn. <br>
+            Phase 3: Every dog gets a rocket!
         </p>
-        <div class="dog-container" style="width: 150px; animation-duration: 2s;">
-            <img src="https://i.ibb.co/Vp8p3Zp/dogi.jpg" style="width: 100%; border-radius: 50%;">
-        </div>
     </section>
 
-    <div class="footer-ticker">
-        <div style="white-space: nowrap; display: inline-block; animation: scroll 10s linear infinite; font-size: 20px;">
-             $PNDG TO THE MOON 🚀 | PANIC IS THE ONLY STRATEGY 🐾 | BARK AT THE STARS ✨ | NO BONES JUST GAINS 🦴 | 
+    <div class="ticker">
+        <div class="ticker-move">
+            🚀 $PNDG TO THE MOON! 🌑 NO PAPER HANDS! 💎 VERY PANIC! WOW! 🐕‍🦺 🚀 $PNDG TO THE MOON! 🌑 NO PAPER HANDS! 💎 VERY PANIC! WOW! 🐕‍🦺
         </div>
     </div>
 
-    <style>
-        @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-    </style>
-
     <script>
-        const canvas = document.getElementById('chart-canvas');
+        const canvas = document.getElementById('star-field');
         const ctx = canvas.getContext('2d');
-        const cursor = document.getElementById('rocket-cursor');
+        const rocket = document.getElementById('rocket-cursor');
 
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        // Слежение мыши за ракетой
+        // Движение ракеты
         document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
+            rocket.style.left = e.clientX - 40 + 'px';
+            rocket.style.top = e.clientY - 40 + 'px';
         });
 
-        // Свечи и звезды
-        let elements = [];
-        class Star {
+        class Particle {
             constructor() {
+                this.reset();
+            }
+            reset() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2;
-                this.speed = Math.random() * 0.5 + 0.1;
+                this.size = Math.random() * 3;
+                this.speedX = (Math.random() - 0.5) * 1;
+                this.speedY = Math.random() * 2 + 1; // Метеориты летят вниз
+                this.type = Math.random() > 0.95 ? 'meteor' : 'star';
             }
             draw() {
-                ctx.fillStyle = "white";
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
+                if(this.type === 'star') {
+                    ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                } else {
+                    // Метеорит
+                    ctx.fillStyle = "#ff3366";
+                    ctx.fillRect(this.x, this.y, this.size * 2, this.size * 2);
+                }
             }
             update() {
-                this.y += this.speed;
-                if (this.y > canvas.height) this.y = 0;
+                this.y += this.speedY;
+                this.x += this.speedX;
+                if(this.y > canvas.height) this.reset();
             }
         }
 
-        for(let i=0; i<100; i++) elements.push(new Star());
+        let stars = [];
+        for(let i=0; i<150; i++) stars.push(new Particle());
 
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            elements.forEach(s => { s.update(); s.draw(); });
-            requestAnimationFrame(animate);
+        function loop() {
+            ctx.clearRect(0,0, canvas.width, canvas.height);
+            stars.forEach(s => { s.update(); s.draw(); });
+            requestAnimationFrame(loop);
         }
-        animate();
+        loop();
 
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
+        window.onresize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
     </script>
 </body>
 </html>
